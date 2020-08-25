@@ -4,6 +4,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Register } from './shared/register';
 import { Observable } from 'rxjs';
+import { GridsterConfig, GridsterItem }  from 'angular-gridster2';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,17 @@ export class AppComponent implements OnInit {
   obj;
   database;
   obser;
+
+  options: GridsterConfig;
+  dashboard: Array<GridsterItem>;
+
+  static itemChange(item, itemComponent) {
+    console.info('itemChanged', item, itemComponent);
+  }
+
+  static itemResize(item, itemComponent) {
+    console.info('itemResized', item, itemComponent);
+  }
 
   constructor(private crudservice: CrudService, firestore: AngularFirestore) {
 
@@ -69,6 +81,15 @@ export class AppComponent implements OnInit {
       this.number = arg.length;
     });
 
+    this.options = {
+      itemChangeCallback: AppComponent.itemChange,
+      itemResizeCallback: AppComponent.itemResize,
+    };
+
+    this.dashboard = [
+      {cols: 2, rows: 1, y: 0, x: 0},
+      {cols: 2, rows: 2, y: 0, x: 2}
+    ];
     //console.log(this.crudservice.getDatabase());
   }
 
@@ -84,4 +105,15 @@ export class AppComponent implements OnInit {
   // console.log(index);
   //  }
 
+  changedOptions() {
+    this.options.api.optionsChanged();
+  }
+
+  removeItem(item) {
+    this.dashboard.splice(this.dashboard.indexOf(item), 1);
+  }
+
+  addItem() {
+    this.dashboard.push();
+  }
 }

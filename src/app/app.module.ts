@@ -16,6 +16,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { CrudService } from './service/crud.service';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { GridsterModule } from 'angular-gridster2';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AngularFirestoreModule,
 
     FlexLayoutModule,
+    GridsterModule,
   ],
   providers: [CrudService],
   bootstrap: [AppComponent]

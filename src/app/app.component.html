@@ -65,7 +65,14 @@
     {{item | json}}
   </li>
 </ul> -->
+<gridster [options]="options" style="margin-bottom: 20px;">
+  <gridster-item [item]="item" *ngFor="let item of dashboard">
+    <!-- your content here -->teste
+  </gridster-item>
+
+</gridster>
  
+
 
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center start" fxLayoutGap="10px" >
       <div fxFlex="30" fxFlex.xs="55" style="background-color: aquamarine;">d</div>
