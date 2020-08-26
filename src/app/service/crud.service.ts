@@ -1,55 +1,43 @@
-import { Register } from './../shared/register';
 import { Observable } from 'rxjs';
-import { Injectable, Query } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
-import { firestore } from 'firebase';
-import { query } from '@angular/animations';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CrudService {
-  registersRef: AngularFireList<any>;
-  registerRef: AngularFireObject<any>;
   items: Observable<any[]>;
   obj;
   database;
   number;
 
-  constructor(public fireservice: AngularFireDatabase, private firestore: AngularFirestore) {
-   // this.items = firestore.collection('items').ref.limit(100);
-    // var data = firestore.;
+  constructor(public fireservice: AngularFireDatabase, private firestore: AngularFirestore) { }
 
-    // console.log(data.ref.orderBy('index').limit(100));
-   }
-
-  newRegister() {
-  //   this.fireservice.collection('/').get().subscribe(
-  //     data => {
-  //       console.log(data);
-  //     }
-  //   );
-  }
-
-  getAll() {
-    this.registersRef = this.fireservice.list('/', ref => ref.orderByChild('share_class_name').equalTo(	'Class B')); // est'a deu certo
-    return this.registersRef;
-  }
-
-  getObj() {
-        this.obj = this.fireservice.object('/10').valueChanges();
-        return this.obj;
+  findByIndex(index) {
+    this.obj = this.fireservice.object('/' + index).valueChanges();
+    return this.obj;
   }
 
   getDatabase() {
     this.database = this.fireservice.list('/', ref => ref.orderByChild('nb_alerts'));
     return this.database;
-}
+  }
 
-getObservable() {
-  this.items = this.fireservice.list('/', ref => ref.orderByChild('share_class_name').equalTo(	'Class B')).valueChanges();
-  return this.items;
-}
+  findByFundName(fund_name) {
+    this.items = this.fireservice.list('/', ref => ref.orderByChild('fund_name')
+      .equalTo(fund_name)
+      .limitToFirst(50))
+      .valueChanges();
+    return this.items;
+  }
+
+  findClass() {
+    this.items = this.fireservice.list('/', ref => ref.orderByChild('share_class_name')
+      .equalTo('Class G Hedged')
+      .limitToLast(10))
+      .valueChanges();
+    return this.items;
+  }
 
 }

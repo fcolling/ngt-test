@@ -1,5 +1,6 @@
 .menubar {
-  background-color:rgb(54, 57, 65);
+  background-color:#6200EE;
+  color: #ffffff;
   height: 3rem;
 }
 
@@ -16,18 +17,60 @@ gridster {
   margin-bottom: 20px;
   max-width: 1200px;
   margin: auto;
-  max-height: 80% ;
+  max-height: 80%;
+
 }
 
 gridster-item {
   padding: 5px;
-  background-color: rgba(67, 73, 82, 0.95);
+  background-color: rgb(255, 255, 255, 0.75);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-bottom: 20px;
   max-width: 1200px;
   margin: auto;
   max-height: 80%;
+  
 }
 
-span {
+.title {
   font-size: 1.5rem;
+}
+
+.table-container {
+  height: 400px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+td {
+  text-align: center;
+}
+
+.mat-elevation-z8 {
+  box-shadow: none;
+}
+
+.mat-table {
+  background: none;
+}
+
+th.mat-header-cell {
+  background-color: #3700B3;
+  color:#ffffff;
+  text-align: center;
+}
+
+tr.mat-row, tr.mat-footer-row {
+  height: 28px;
+}
+
+tr.mat-header-row {
+  height: 28px;
+}
+
+.mat-form-field-flex ,  .mat-form-field {
+    width: 180px;
 }

@@ -1,29 +1,122 @@
 <div class="menubar" fxLayoutAlign="space-between center">
-  <div class="menubar-left"><span>Menu</span></div>
-  <div class="menubar-right"><span>logout</span></div>
+  <div class="menubar-left"><span>NGT Frontend Developer Test</span></div>
+  <div *ngIf="innerWidth >850" class="menubar-right">
+    <span>Developed By Fabiano Alex Colling - visit:
+    <a style="color: #3700B3" mat-raised-button href="https://fabianocolling.com" target="_blank">https://fabianocolling.com</a>
+    </span></div>
 </div>
 
 <gridster [options]="options">
-  <gridster-item [item]="item" *ngFor="let item of dashboard">
-    <div class="item-container">
-      <div class="item-mock">
-        <span>item </span>
-        c:{{item.cols}} r:{{item.rows}}
+  <gridster-item [item]="{'cols': 3, 'rows': 4, 'y': 0, 'x': 0 }" #gridster1>
+    <div class="gridster-item-content">
+      <span class="title" matBadgeOverlap="false">{{(obser)?obser[0].fund_name:'' }}</span>
+
+
+      <div class="table-container mat-elevation-z8" #teste [style.height]="gridster1.height*0.75 +'px'">
+        <table mat-table [dataSource]="obser">
+
+          <ng-container matColumnDef="index">
+            <th mat-header-cell *matHeaderCellDef> Index </th>
+            <td mat-cell *matCellDef="let element"> {{element.index}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="subfund_name">
+            <th mat-header-cell *matHeaderCellDef> Subfund Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.subfund_name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="share_class_name">
+            <th mat-header-cell *matHeaderCellDef> Share Class </th>
+            <td mat-cell *matCellDef="let element"> {{element.share_class_name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.date.substring(6,8) + '/' + element.date.substring(4,6)+ '/' + element.date.substring(0,4) }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="report_status">
+            <th mat-header-cell *matHeaderCellDef> Report Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.report_status}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nb_alerts">
+            <th mat-header-cell *matHeaderCellDef> Alerts </th>
+            <td mat-cell *matCellDef="let element"> {{element.nb_alerts}} </td>
+          </ng-container>
+
+          <div *ngIf="innerWidth <399">
+          <tr mat-header-row
+            *matHeaderRowDef="['index', 'subfund_name', 'share_class_name', 'report_status', 'nb_alerts']; sticky: true">
+          </tr>
+          <tr mat-row
+            *matRowDef="let row; columns: ['index', 'subfund_name', 'share_class_name', 'report_status', 'nb_alerts'];">
+          </tr>
+          </div>
+
+          <div *ngIf="innerWidth >400">
+          <tr  mat-header-row
+            *matHeaderRowDef="['index', 'subfund_name', 'share_class_name', 'date', 'report_status', 'nb_alerts']; sticky: true">
+          </tr>
+          <tr mat-row
+            *matRowDef="let row; columns: ['index', 'subfund_name', 'share_class_name', 'date', 'report_status', 'nb_alerts'];">
+          </tr>
+          </div>
+
+        </table>
+      </div>
+
+    </div>
+  </gridster-item>
+
+  <gridster-item [item]="{'cols': 3, 'rows': 2, 'y': 0, 'x': 3 }">
+    <div class="gridster-item-content">
+      <span class="title" matBadgeOverlap="false">Class G Hedged</span>
+      <div *ngFor="let reg of classfilter">
+        <div style="margin: 10px;">
+          <span matBadge={{reg.nb_alerts}} matBadgeOverlap="false">
+            {{reg.index}} - {{reg.subfund_name}} - {{reg.share_class_name}}
+          </span>
+        </div>
+
       </div>
     </div>
   </gridster-item>
-    <gridster-item [item]="item" *ngFor="let item of dashboard">
-    <div class="item-container">
-      <div class="item-mock">
-        <span>item </span>
-        c:{{item.cols}} r:{{item.rows}}
+
+  <gridster-item [item]="{'cols': 2, 'rows': 2, 'y': 2, 'x': 3}">
+    <div class="gridster-item-content">
+      <div>
+        <mat-form-field class="form-field">
+          <mat-label>Enter an index </mat-label>
+          <input matInput type="text" #indice>
+          <button mat-button *ngIf="indice.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="indice.value=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="findByIndex(indice.value)">Find a
+          index</button>
       </div>
+      <span class="title" matBadge={{register?.nb_alerts}} matBadgeOverlap="false">Index: {{register?.index }}</span>
+
+      <div *ngIf="register != null" style="margin: 10px;">
+        <p style="font-size: 1.3rem; font-weight: 400;">{{register?.fund_name}}</p>
+        <div style="padding-left: 10px;">
+          <p>{{register?.subfund_name}}</p>
+          <p>
+            Share Class: {{register?.share_class_name}}, <br>
+            Date: {{register?.date.substring(6,8) + '/' + register?.date.substring(4,6)+ '/' + register?.date.substring(0,4)}} <br>
+            Report Status : {{(register?.report_status== 'True')}}
+          </p>
+        </div>
+
+
+      </div>
+
     </div>
   </gridster-item>
+
 </gridster>
-
-
-
-{{obj?.nb_alerts }}
-{{obser | json}}
-{{number}}
