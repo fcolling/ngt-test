@@ -3,4 +3,12 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     color: rgb(202, 202, 202);
+
+    background-image: url('assets/img/backImage.jpg') ;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    
 }

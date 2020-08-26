@@ -1,6 +1,7 @@
 import { CrudService } from './service/crud.service';
 import { Component, ViewChild, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+// import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Register } from './shared/register';
 import { Observable } from 'rxjs';
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
   number = 0;
 
   dataSource: MatTableDataSource<Register>;
-  @ViewChild(MatPaginator, null) paginator: MatPaginator;
+  // @ViewChild(MatPaginator, null) paginator: MatPaginator;
   data: any = [];
   displayedColumns: any[] = [
     'index',
@@ -43,35 +44,7 @@ export class AppComponent implements OnInit {
     console.info('itemResized', item, itemComponent);
   }
 
-  constructor(private crudservice: CrudService, firestore: AngularFirestore) {
-
-    this.crudservice.getAll()
-      .snapshotChanges().subscribe(data => {
-
-        data.forEach(item => {
-          let a = item.payload.toJSON();
-          a['index'] = item.key;
-          this.data.push(a as Register);
-        });
-        /* Data table */
-        this.dataSource = new MatTableDataSource(this.data);
-        /* Pagination */
-        setTimeout(() => {
-          this.dataSource.paginator = this.paginator;
-        }, 0);
-      });
-
-    //this.obj = this.crudservice.getColection();
-    //this.crudservice.getObj().subscribe(arg =>console.log(arg));
-
-    // .toPromise()
-    // .then(data => {
-    //   console.log(data);
-    // }).catch(erro => {
-    //   console.log(erro);
-    // });
-
-  }
+  constructor(private crudservice: CrudService) { }
 
 
   ngOnInit(): void {
@@ -87,6 +60,8 @@ export class AppComponent implements OnInit {
     };
 
     this.dashboard = [
+      {cols: 2, rows: 1, y: 0, x: 0},
+      {cols: 3, rows: 1, y: 0, x: 0},
       {cols: 2, rows: 1, y: 0, x: 0},
       {cols: 2, rows: 2, y: 0, x: 2}
     ];
