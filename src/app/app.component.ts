@@ -1,7 +1,7 @@
 import { CrudService } from './service/crud.service';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { GridsterConfig, GridsterItem } from 'angular-gridster2';
+import { GridsterConfig } from 'angular-gridster2';
+
 
 @Component({
   selector: 'app-root',
@@ -16,14 +16,6 @@ export class AppComponent implements OnInit {
 
   options: GridsterConfig;
 
-  static itemChange(item, itemComponent) {
-    //console.info('itemChanged', item, itemComponent);
-  }
-
-  static itemResize(item, itemComponent) {
-    //console.info('itemResized', item, itemComponent);
-  }
-
   constructor(private crudservice: CrudService) { }
 
   ngOnInit(): void {
@@ -31,10 +23,7 @@ export class AppComponent implements OnInit {
     this.findByFundName('Three Sigma');
     this.findClass();
 
-    this.options = {
-      itemChangeCallback: AppComponent.itemChange,
-      itemResizeCallback: AppComponent.itemResize,
-    };
+    this.options = {};
   }
 
   findByIndex(index) {

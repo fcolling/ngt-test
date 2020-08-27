@@ -35,7 +35,7 @@ export class CrudService {
   findClass() {
     this.items = this.fireservice.list('/', ref => ref.orderByChild('share_class_name')
       .equalTo('Class G Hedged')
-      .limitToLast(10))
+      .limitToLast(8))
       .valueChanges();
     return this.items;
   }
